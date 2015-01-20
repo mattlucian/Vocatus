@@ -1,7 +1,67 @@
 ﻿@{
     ViewBag.Title = "About";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+<h2>Our Team:</h2>
 
-<p>Use this area to provide additional information.</p>
+<body>
+    Our team is comprised of University of North Florida (UNF) undergraduate students. We undertook different roles
+    during this effort to align our project's roles with the industry's standard composition. We are all based out of Jacksonville, 
+    Florida for the time being. If you need to get in contact with a specific member, please use the e-mails below.
+    <br/><br/>
+    <address>
+        <table>
+            <thead>
+                <tr>
+                    <td><strong>Title</strong></td>
+                    <td><strong>Member</strong></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Project Manager</strong> </td>
+                    <td><a href="mailto:brittany@vocatus.net">Brittany Dinneen</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Developer:</strong></td>
+                    <td><a href="mailto:matt@vocatus.net">Matt Myers</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Database Administrator:</strong></td>
+                    <td><a href="mailto:marcus@vocatus.net">Marcus Hagans</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Designer:</strong></td>
+                    <td><a href="mailto:keith@vocatus.net">Keith Hubbard</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Analyst/Quality Assurance:</strong></td>
+                    <td><a href="mailto:megan@vocatus.net">Megan Perry</a></td>
+                </tr>
+            </tbody>
+        </table> >
+
+    </address>
+</body>
+
+<br/><br/>
+<h2>Contact:</h2>
+<p>For all inquiries for us as a team, please use the "Contact form" found directly below instead. This form will
+    yield quicker responses than individual e-mails.</p>   
+
+<form>
+    <table>
+        <tr>
+            <td>Your Name:</td>
+            <td><input type="text" id="contactName" name="contactName" /></td>
+        </tr>
+        <tr>
+            <td>Your Email:</td>
+            <td><input type="text" id="contactEmail" name="contactEmail" /></td>
+        </tr>
+        <tr>
+            <td>Reason for Contact:</td>
+            <td><textarea id="contactReason" name="contactReason" ></textarea></td>
+        </tr>
+        <tr><td><input type="submit" value="Send" /></td></tr>
+     </table>
+</form>
