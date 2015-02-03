@@ -7,12 +7,12 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{307D8B35-519F-457B-BC27-81EF2999094C}</ProjectGuid>
+    <ProjectGuid>{DC2D9F77-7E25-4383-8BC5-9C97FF3B7FD3}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Vocatus</RootNamespace>
-    <AssemblyName>Vocatus</AssemblyName>
+    <RootNamespace>DerekApplication</RootNamespace>
+    <AssemblyName>DerekApplication</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
@@ -160,75 +160,60 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Content\Company.cs">
+      <DependentUpon>MattsDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Content\MattsDB.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MattsDB.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Content\MattsDB.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MattsDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Content\MattsDB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MattsDB.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\DrinkController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\Cocktail.cs">
-      <DependentUpon>VocatusDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\CocktailModel.cs" />
-    <Compile Include="Models\Combination.cs">
-      <DependentUpon>VocatusDB.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\Ingredient.cs">
-      <DependentUpon>VocatusDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\User.cs">
-      <DependentUpon>VocatusDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\VocatusDB.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>VocatusDB.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\VocatusDB.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>VocatusDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\VocatusDB.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>VocatusDB.edmx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\img\rumandcoke.png" />
-    <Content Include="Content\img\screwdriver.png" />
-    <Content Include="default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <EntityDeploy Include="Models\VocatusDB.edmx">
+    <EntityDeploy Include="Content\MattsDB.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>VocatusDB.Designer.cs</LastGenOutput>
+      <LastGenOutput>MattsDB.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\VocatusDB.Context.tt">
+    <Content Include="Content\MattsDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>VocatusDB.edmx</DependentUpon>
-      <LastGenOutput>VocatusDB.Context.cs</LastGenOutput>
+      <DependentUpon>MattsDB.edmx</DependentUpon>
+      <LastGenOutput>MattsDB.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\VocatusDB.edmx.diagram">
-      <DependentUpon>VocatusDB.edmx</DependentUpon>
+    <Content Include="Content\MattsDB.edmx.diagram">
+      <DependentUpon>MattsDB.edmx</DependentUpon>
     </Content>
-    <Content Include="Models\VocatusDB.tt">
+    <Content Include="Content\MattsDB.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>VocatusDB.edmx</DependentUpon>
-      <LastGenOutput>VocatusDB.cs</LastGenOutput>
+      <DependentUpon>MattsDB.edmx</DependentUpon>
+      <LastGenOutput>MattsDB.cs</LastGenOutput>
     </Content>
-    <None Include="Properties\PublishProfiles\ProdDeploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -253,6 +238,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
@@ -265,13 +251,11 @@
     <Content Include="Views\Account\Manage.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Drink\MyDrinks.cshtml" />
-    <Content Include="Views\Drink\Explore.cshtml" />
-    <Content Include="Views\Drink\Index.cshtml" />
+    <Content Include="Views\Home\Details.cshtml" />
+    <Content Include="Views\Home\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\App_LocalResources\" />
-    <Folder Include="Views\CocktailModel\" />
+    <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -299,9 +283,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>49309</DevelopmentServerPort>
+          <DevelopmentServerPort>49435</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:51657/</IISUrl>
+          <IISUrl>http://localhost:49435/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

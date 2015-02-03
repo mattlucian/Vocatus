@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DB_84924_vocatusModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DB_84924_vocatus.dbo.Company' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="company_id" />
+          </Key>
+          <Property Name="company_id" Type="int" Nullable="false" />
+          <Property Name="company_name" Type="varchar" MaxLength="150" />
+          <Property Name="company_address1" Type="varchar" MaxLength="255" />
+          <Property Name="company_address2" Type="varchar" MaxLength="255" />
+          <Property Name="company_zip" Type="varchar" MaxLength="10" />
+          <Property Name="company_state" Type="varchar" MaxLength="100" />
+          <Property Name="company_country" Type="varchar" MaxLength="100" />
+          <Property Name="company_phone" Type="varchar" MaxLength="15" />
+          <Property Name="company_city" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityContainer Name="DB_84924_vocatusModelStoreContainer">
+          <EntitySet Name="Company" EntityType="Self.Company" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Company].[company_id] AS [company_id], 
+    [Company].[company_name] AS [company_name], 
+    [Company].[company_address1] AS [company_address1], 
+    [Company].[company_address2] AS [company_address2], 
+    [Company].[company_zip] AS [company_zip], 
+    [Company].[company_state] AS [company_state], 
+    [Company].[company_country] AS [company_country], 
+    [Company].[company_phone] AS [company_phone], 
+    [Company].[company_city] AS [company_city]
+    FROM [dbo].[Company] AS [Company]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DB_84924_vocatusModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="company_id" />
+          </Key>
+          <Property Name="company_id" Type="Int32" Nullable="false" />
+          <Property Name="company_name" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="company_address1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="company_address2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="company_zip" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="company_state" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="company_country" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="company_phone" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="company_city" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityContainer Name="DB_84924_vocatusEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Companies" EntityType="Self.Company" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DB_84924_vocatusModelStoreContainer" CdmEntityContainer="DB_84924_vocatusEntities">
+          <EntitySetMapping Name="Companies">
+            <EntityTypeMapping TypeName="DB_84924_vocatusModel.Company">
+              <MappingFragment StoreEntitySet="Company">
+                <ScalarProperty Name="company_id" ColumnName="company_id" />
+                <ScalarProperty Name="company_name" ColumnName="company_name" />
+                <ScalarProperty Name="company_address1" ColumnName="company_address1" />
+                <ScalarProperty Name="company_address2" ColumnName="company_address2" />
+                <ScalarProperty Name="company_zip" ColumnName="company_zip" />
+                <ScalarProperty Name="company_state" ColumnName="company_state" />
+                <ScalarProperty Name="company_country" ColumnName="company_country" />
+                <ScalarProperty Name="company_phone" ColumnName="company_phone" />
+                <ScalarProperty Name="company_city" ColumnName="company_city" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

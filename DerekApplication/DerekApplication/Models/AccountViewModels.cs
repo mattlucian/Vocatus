@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Vocatus.Models
+namespace DerekApplication.Models
 {
     public class ExternalLoginConfirmationViewModel
     {
@@ -13,7 +13,7 @@ namespace Vocatus.Models
     {
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Current password")] 
+        [Display(Name = "Current password")]
         public string OldPassword { get; set; }
 
         [Required]

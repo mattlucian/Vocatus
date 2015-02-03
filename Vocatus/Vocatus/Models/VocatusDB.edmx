@@ -1,0 +1,237 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DB_84924_vocatusModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Cocktail">
+          <Key>
+            <PropertyRef Name="cocktail_id" />
+          </Key>
+          <Property Name="cocktail_id" Type="int" Nullable="false" />
+          <Property Name="cocktail_name" Type="varchar" MaxLength="150" />
+          <Property Name="cocktail_image_path" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Combination">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="cocktail_id" />
+            <PropertyRef Name="ingredients_id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="cocktail_id" Type="int" Nullable="false" />
+          <Property Name="ingredients_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ingredient">
+          <Key>
+            <PropertyRef Name="ingredients_id" />
+          </Key>
+          <Property Name="ingredients_id" Type="int" Nullable="false" />
+          <Property Name="type" Type="varchar" MaxLength="50" />
+          <Property Name="subtype" Type="varchar" MaxLength="50" />
+          <Property Name="name" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="user_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="150" />
+          <Property Name="password" Type="varchar" MaxLength="255" />
+          <Property Name="salt" Type="varchar" MaxLength="255" />
+          <Property Name="access_level" Type="int" />
+        </EntityType>
+        <Association Name="FK__Combinati__cockt__36B12243">
+          <End Role="Cocktail" Type="Self.Cocktail" Multiplicity="1" />
+          <End Role="Combination" Type="Self.Combination" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cocktail">
+              <PropertyRef Name="cocktail_id" />
+            </Principal>
+            <Dependent Role="Combination">
+              <PropertyRef Name="cocktail_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Combinati__ingre__37A5467C">
+          <End Role="Ingredient" Type="Self.Ingredient" Multiplicity="1" />
+          <End Role="Combination" Type="Self.Combination" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ingredient">
+              <PropertyRef Name="ingredients_id" />
+            </Principal>
+            <Dependent Role="Combination">
+              <PropertyRef Name="ingredients_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB_84924_vocatusModelStoreContainer">
+          <EntitySet Name="Cocktail" EntityType="Self.Cocktail" Schema="Vocatus" store:Type="Tables" />
+          <EntitySet Name="Combination" EntityType="Self.Combination" Schema="Vocatus" store:Type="Tables" />
+          <EntitySet Name="Ingredient" EntityType="Self.Ingredient" Schema="Vocatus" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="Vocatus" store:Type="Tables" />
+          <AssociationSet Name="FK__Combinati__cockt__36B12243" Association="Self.FK__Combinati__cockt__36B12243">
+            <End Role="Cocktail" EntitySet="Cocktail" />
+            <End Role="Combination" EntitySet="Combination" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Combinati__ingre__37A5467C" Association="Self.FK__Combinati__ingre__37A5467C">
+            <End Role="Ingredient" EntitySet="Ingredient" />
+            <End Role="Combination" EntitySet="Combination" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="VocatusModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="VocatusEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Cocktails" EntityType="VocatusModel.Cocktail" />
+          <EntitySet Name="Combinations" EntityType="VocatusModel.Combination" />
+          <EntitySet Name="Ingredients" EntityType="VocatusModel.Ingredient" />
+          <EntitySet Name="Users" EntityType="VocatusModel.User" />
+          <AssociationSet Name="FK__Combinati__cockt__36B12243" Association="VocatusModel.FK__Combinati__cockt__36B12243">
+            <End Role="Cocktail" EntitySet="Cocktails" />
+            <End Role="Combination" EntitySet="Combinations" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Combinati__ingre__37A5467C" Association="VocatusModel.FK__Combinati__ingre__37A5467C">
+            <End Role="Ingredient" EntitySet="Ingredients" />
+            <End Role="Combination" EntitySet="Combinations" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Cocktail">
+          <Key>
+            <PropertyRef Name="cocktail_id" />
+          </Key>
+          <Property Name="cocktail_id" Type="Int32" Nullable="false" />
+          <Property Name="cocktail_name" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="cocktail_image_path" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Combinations" Relationship="VocatusModel.FK__Combinati__cockt__36B12243" FromRole="Cocktail" ToRole="Combination" />
+        </EntityType>
+        <EntityType Name="Combination">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="cocktail_id" />
+            <PropertyRef Name="ingredients_id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="cocktail_id" Type="Int32" Nullable="false" />
+          <Property Name="ingredients_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cocktail" Relationship="VocatusModel.FK__Combinati__cockt__36B12243" FromRole="Combination" ToRole="Cocktail" />
+          <NavigationProperty Name="Ingredient" Relationship="VocatusModel.FK__Combinati__ingre__37A5467C" FromRole="Combination" ToRole="Ingredient" />
+        </EntityType>
+        <EntityType Name="Ingredient">
+          <Key>
+            <PropertyRef Name="ingredients_id" />
+          </Key>
+          <Property Name="ingredients_id" Type="Int32" Nullable="false" />
+          <Property Name="type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="subtype" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Combinations" Relationship="VocatusModel.FK__Combinati__ingre__37A5467C" FromRole="Ingredient" ToRole="Combination" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="user_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="salt" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="access_level" Type="Int32" />
+        </EntityType>
+        <Association Name="FK__Combinati__cockt__36B12243">
+          <End Type="VocatusModel.Cocktail" Role="Cocktail" Multiplicity="1" />
+          <End Type="VocatusModel.Combination" Role="Combination" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cocktail">
+              <PropertyRef Name="cocktail_id" />
+            </Principal>
+            <Dependent Role="Combination">
+              <PropertyRef Name="cocktail_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Combinati__ingre__37A5467C">
+          <End Type="VocatusModel.Ingredient" Role="Ingredient" Multiplicity="1" />
+          <End Type="VocatusModel.Combination" Role="Combination" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ingredient">
+              <PropertyRef Name="ingredients_id" />
+            </Principal>
+            <Dependent Role="Combination">
+              <PropertyRef Name="ingredients_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DB_84924_vocatusModelStoreContainer" CdmEntityContainer="VocatusEntities">
+          <EntitySetMapping Name="Cocktails">
+            <EntityTypeMapping TypeName="VocatusModel.Cocktail">
+              <MappingFragment StoreEntitySet="Cocktail">
+                <ScalarProperty Name="cocktail_image_path" ColumnName="cocktail_image_path" />
+                <ScalarProperty Name="cocktail_name" ColumnName="cocktail_name" />
+                <ScalarProperty Name="cocktail_id" ColumnName="cocktail_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Combinations">
+            <EntityTypeMapping TypeName="VocatusModel.Combination">
+              <MappingFragment StoreEntitySet="Combination">
+                <ScalarProperty Name="ingredients_id" ColumnName="ingredients_id" />
+                <ScalarProperty Name="cocktail_id" ColumnName="cocktail_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ingredients">
+            <EntityTypeMapping TypeName="VocatusModel.Ingredient">
+              <MappingFragment StoreEntitySet="Ingredient">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="subtype" ColumnName="subtype" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="ingredients_id" ColumnName="ingredients_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="VocatusModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="access_level" ColumnName="access_level" />
+                <ScalarProperty Name="salt" ColumnName="salt" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="user_name" ColumnName="user_name" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
