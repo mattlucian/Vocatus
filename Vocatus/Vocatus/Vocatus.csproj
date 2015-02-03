@@ -270,7 +270,7 @@
     <Content Include="Views\Drink\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\App_LocalResources\" />
+    <Folder Include="App_Data\" />
     <Folder Include="Views\CocktailModel\" />
   </ItemGroup>
   <ItemGroup>

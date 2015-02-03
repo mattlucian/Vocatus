@@ -18,8 +18,11 @@ namespace Vocatus.Controllers
 
         public ActionResult MyDrinks()
         {
+
+            
             return View();
         }
+
 
         public ActionResult Explore()
         {
