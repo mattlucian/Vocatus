@@ -27,8 +27,8 @@ namespace Vocatus.Models
     
         public virtual DbSet<Cocktail> Cocktails { get; set; }
         public virtual DbSet<Combination> Combinations { get; set; }
-        public virtual DbSet<Ingredient> Ingredients { get; set; }
         public virtual DbSet<IngredientsOnHand> IngredientsOnHands { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
+        public virtual DbSet<Ingredient> Ingredients { get; set; }
     }
 }

@@ -41,7 +41,6 @@ warning 6002: The table/view 'DB_84924_vocatus.Vocatus.Combination' does not hav
           </Key>
           <Property Name="ingredients_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="type" Type="varchar" MaxLength="50" />
-          <Property Name="subtype" Type="varchar" MaxLength="50" />
           <Property Name="name" Type="varchar" MaxLength="255" />
         </EntityType>
         <!--Errors Found During Generation:
@@ -106,7 +105,7 @@ warning 6002: The table/view 'DB_84924_vocatus.Vocatus.IngredientsOnHand' does n
             <End Role="Ingredient" EntitySet="Ingredient" />
             <End Role="Combination" EntitySet="Combination" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -114,17 +113,17 @@ warning 6002: The table/view 'DB_84924_vocatus.Vocatus.IngredientsOnHand' does n
         <EntityContainer Name="VocatusEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Cocktails" EntityType="VocatusModel.Cocktail" />
           <EntitySet Name="Combinations" EntityType="VocatusModel.Combination" />
-          <EntitySet Name="Ingredients" EntityType="VocatusModel.Ingredient" />
           <AssociationSet Name="FK__Combinati__cockt__36B12243" Association="VocatusModel.FK__Combinati__cockt__36B12243">
             <End Role="Cocktail" EntitySet="Cocktails" />
             <End Role="Combination" EntitySet="Combinations" />
           </AssociationSet>
-          <AssociationSet Name="FK__Combinati__ingre__37A5467C" Association="VocatusModel.FK__Combinati__ingre__37A5467C">
+          <EntitySet Name="IngredientsOnHands" EntityType="VocatusModel.IngredientsOnHand" />
+          <EntitySet Name="AspNetUsers" EntityType="VocatusModel.AspNetUser" />
+          <EntitySet Name="Ingredients" EntityType="VocatusModel.Ingredient" />
+          <AssociationSet Name="FK__Combinati__ingre__440B1D61" Association="VocatusModel.FK__Combinati__ingre__440B1D61">
             <End Role="Ingredient" EntitySet="Ingredients" />
             <End Role="Combination" EntitySet="Combinations" />
           </AssociationSet>
-          <EntitySet Name="IngredientsOnHands" EntityType="VocatusModel.IngredientsOnHand" />
-          <EntitySet Name="AspNetUsers" EntityType="VocatusModel.AspNetUser" />
         </EntityContainer>
         <EntityType Name="Cocktail">
           <Key>
@@ -145,17 +144,7 @@ warning 6002: The table/view 'DB_84924_vocatus.Vocatus.IngredientsOnHand' does n
           <Property Name="cocktail_id" Type="Int32" Nullable="false" />
           <Property Name="ingredients_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Cocktail" Relationship="VocatusModel.FK__Combinati__cockt__36B12243" FromRole="Combination" ToRole="Cocktail" />
-          <NavigationProperty Name="Ingredient" Relationship="VocatusModel.FK__Combinati__ingre__37A5467C" FromRole="Combination" ToRole="Ingredient" />
-        </EntityType>
-        <EntityType Name="Ingredient">
-          <Key>
-            <PropertyRef Name="ingredients_id" />
-          </Key>
-          <Property Name="ingredients_id" Type="Int32" Nullable="false" />
-          <Property Name="type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="subtype" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Combinations" Relationship="VocatusModel.FK__Combinati__ingre__37A5467C" FromRole="Ingredient" ToRole="Combination" />
+          <NavigationProperty Name="Ingredient" Relationship="VocatusModel.FK__Combinati__ingre__440B1D61" FromRole="Combination" ToRole="Ingredient" />
         </EntityType>
         <Association Name="FK__Combinati__cockt__36B12243">
           <End Type="VocatusModel.Cocktail" Role="Cocktail" Multiplicity="1" />
@@ -166,18 +155,6 @@ warning 6002: The table/view 'DB_84924_vocatus.Vocatus.IngredientsOnHand' does n
             </Principal>
             <Dependent Role="Combination">
               <PropertyRef Name="cocktail_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Combinati__ingre__37A5467C">
-          <End Type="VocatusModel.Ingredient" Role="Ingredient" Multiplicity="1" />
-          <End Type="VocatusModel.Combination" Role="Combination" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Ingredient">
-              <PropertyRef Name="ingredients_id" />
-            </Principal>
-            <Dependent Role="Combination">
-              <PropertyRef Name="ingredients_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -201,6 +178,27 @@ warning 6002: The table/view 'DB_84924_vocatus.Vocatus.IngredientsOnHand' does n
           <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Discriminator" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="Ingredient">
+          <Key>
+            <PropertyRef Name="ingredients_id" />
+          </Key>
+          <Property Name="ingredients_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Combinations" Relationship="VocatusModel.FK__Combinati__ingre__440B1D61" FromRole="Ingredient" ToRole="Combination" />
+        </EntityType>
+        <Association Name="FK__Combinati__ingre__440B1D61">
+          <End Type="VocatusModel.Ingredient" Role="Ingredient" Multiplicity="1" />
+          <End Type="VocatusModel.Combination" Role="Combination" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ingredient">
+              <PropertyRef Name="ingredients_id" />
+            </Principal>
+            <Dependent Role="Combination">
+              <PropertyRef Name="ingredients_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -225,16 +223,6 @@ warning 6002: The table/view 'DB_84924_vocatus.Vocatus.IngredientsOnHand' does n
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Ingredients">
-            <EntityTypeMapping TypeName="VocatusModel.Ingredient">
-              <MappingFragment StoreEntitySet="Ingredient">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="subtype" ColumnName="subtype" />
-                <ScalarProperty Name="type" ColumnName="type" />
-                <ScalarProperty Name="ingredients_id" ColumnName="ingredients_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="IngredientsOnHands">
             <EntityTypeMapping TypeName="VocatusModel.IngredientsOnHand">
               <MappingFragment StoreEntitySet="IngredientsOnHand">
@@ -252,6 +240,15 @@ warning 6002: The table/view 'DB_84924_vocatus.Vocatus.IngredientsOnHand' does n
                 <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ingredients">
+            <EntityTypeMapping TypeName="VocatusModel.Ingredient">
+              <MappingFragment StoreEntitySet="Ingredient">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="ingredients_id" ColumnName="ingredients_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -30,12 +30,75 @@ namespace Vocatus.Controllers
                 }
                 var realList = ingredientsOnHandList.ToList();
                 List<Ingredient> results = new List<Ingredient>();
+                UserDrinkModel udm = new UserDrinkModel();
 
+                udm.allPossibleIngredients = db.Ingredients.OrderBy(o=>o.name).ToList();
+                
                 foreach (IngredientsOnHand s in realList)
                 {
                     results.Add(db.Ingredients.Where(x => x.ingredients_id == s.ingredient_id).FirstOrDefault());
+                    udm.allPossibleIngredients.Remove(db.Ingredients.Where(i => i.ingredients_id == s.ingredient_id).FirstOrDefault());
                 }
-                return View(results);
+                udm.allCurrentIngredients = results;
+
+                List<SelectListItem> remainingLiqours = new List<SelectListItem>();
+                List<SelectListItem> remainingCordials = new List<SelectListItem>();
+                List<SelectListItem> remainingMisc = new List<SelectListItem>();
+
+
+                foreach (Ingredient ie in udm.allPossibleIngredients)
+                {
+                    if (ie.type == "Liquor")
+                    {
+                        remainingLiqours.Add(new SelectListItem { Text = ie.name, Value = "" + ie.ingredients_id });
+                    }
+                    else if (ie.type == "Cordials")
+                    {
+                        remainingCordials.Add(new SelectListItem { Text = ie.name, Value = "" + ie.ingredients_id });
+                    }
+                    else
+                    {
+                        remainingMisc.Add(new SelectListItem { Text = ie.name, Value = "" + ie.ingredients_id });
+                    }
+                    
+                }
+                ViewBag.RemainingLiqours = remainingLiqours;
+                ViewBag.RemainingCordials = remainingCordials;
+                ViewBag.RemainingMisc = remainingMisc;
+
+
+                var allCocktails = db.Cocktails.ToList();
+                udm.allPossibleCocktails = allCocktails.ToList();
+
+                foreach (Cocktail c in allCocktails)
+                {
+                    List<Combination> combinations = db.Combinations.Where(j => j.cocktail_id == c.cocktail_id).ToList();
+                    bool[] validChecks = new bool[combinations.Count];
+                    int count = 0;
+                    foreach (Combination g in combinations)
+                    {
+                        foreach (Ingredient i in udm.allCurrentIngredients)
+                        {
+                            if (i.ingredients_id == g.ingredients_id)
+                            {
+                                validChecks[count] = true;
+                            }    
+                        }
+                        count++;
+                    }
+
+                    foreach (bool check in validChecks)
+                    {
+                        if (check == false)
+                        {
+                            udm.allPossibleCocktails.Remove(c);
+                            break;
+                        }
+                    }
+                }
+                    
+
+                return View(udm);
 
             }
             else
@@ -43,9 +106,6 @@ namespace Vocatus.Controllers
                 return RedirectToAction("Login", "Account");
             }
         }
-
-        
-
 
         public ActionResult Explore()
         {
@@ -58,8 +118,6 @@ namespace Vocatus.Controllers
             List<CocktailModel> drinks = new List<CocktailModel>();
 
             foreach(Cocktail c in cocktails){
-                // var ingredients = 
-
                 List<Combination> incredientsFound = db.Combinations.Where(z => z.cocktail_id == c.cocktail_id).ToList();
                 CocktailModel cm = new CocktailModel()
                 {
@@ -76,10 +134,6 @@ namespace Vocatus.Controllers
                 drinks.Add(cm);
             }
 
-            //pull list of all the alcoholic beverages
-                //pull list of all possible mixers
-                //insert these into a model to pass to the view
-                        
             return View(drinks);
         }
 	}

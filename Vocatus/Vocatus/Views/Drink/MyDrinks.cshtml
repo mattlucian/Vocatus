@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Vocatus.Models.Ingredient>
+﻿@model Vocatus.Models.UserDrinkModel
 @{
     ViewBag.Title = "MyDrinks";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -12,14 +12,41 @@
 @{
     int count = 0;   
 }
-@foreach (var i in Model)
+@foreach (var i in Model.allCurrentIngredients)
 {
     <p>@count . @i.name</p>
     count++;
 }
 <h4>Add a new Ingredient:</h4>
 
+<div style="width:100%;float:left">
+    <div style="width:30%;float:left">
+        <strong>Liquors</strong>
+        @Html.DropDownList("RemainingLiqours")
+        <button>Add</button>    
+    </div>
+    <div style="width:30%;float:left">
+        <strong>Cordials</strong>
+        @Html.DropDownList("RemainingCordials")
+        <button>Add</button>
+    </div>
+    <div style="width:30%;float:left">
+        <strong>Misc</strong>
+        @Html.DropDownList("RemainingMisc")
+        <button>Add</button>
+    </div>
+
+</div>
 
 
-<h3>Possible Drink Combinations:</h3>
 
+
+
+<div style="width:100%;float:left">
+    <h3>Possible Cocktails to make:</h3>
+    @foreach (var i in Model.allPossibleCocktails)
+    {
+        <p>@i.cocktail_name</p>
+
+    }
+</div>

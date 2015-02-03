@@ -7,11 +7,11 @@
       <Diagram DiagramId="3fbc197f79c84307acdbdbb97a4ea5fb" Name="Diagram1">
         <EntityTypeShape EntityType="VocatusModel.Cocktail" Width="1.5" PointX="0.75" PointY="1" />
         <EntityTypeShape EntityType="VocatusModel.Combination" Width="1.5" PointX="3" PointY="0.875" />
-        <EntityTypeShape EntityType="VocatusModel.Ingredient" Width="1.5" PointX="0.75" PointY="3.875" />
         <AssociationConnector Association="VocatusModel.FK__Combinati__cockt__36B12243" />
-        <AssociationConnector Association="VocatusModel.FK__Combinati__ingre__37A5467C" />
         <EntityTypeShape EntityType="VocatusModel.IngredientsOnHand" Width="1.5" PointX="5.375" PointY="0.75" />
         <EntityTypeShape EntityType="VocatusModel.AspNetUser" Width="1.5" PointX="3.375" PointY="3.75" />
+        <EntityTypeShape EntityType="VocatusModel.Ingredient" Width="1.5" PointX="0.75" PointY="3.875" />
+        <AssociationConnector Association="VocatusModel.FK__Combinati__ingre__440B1D61" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

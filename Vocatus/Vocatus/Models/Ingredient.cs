@@ -21,7 +21,6 @@ namespace Vocatus.Models
     
         public int ingredients_id { get; set; }
         public string type { get; set; }
-        public string subtype { get; set; }
         public string name { get; set; }
     
         public virtual ICollection<Combination> Combinations { get; set; }
