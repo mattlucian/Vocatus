@@ -167,6 +167,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AspNetUser.cs">
+      <DependentUpon>VocatusDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Cocktail.cs">
       <DependentUpon>VocatusDB.tt</DependentUpon>
     </Compile>
@@ -178,9 +181,10 @@
     <Compile Include="Models\Ingredient.cs">
       <DependentUpon>VocatusDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\User.cs">
+    <Compile Include="Models\IngredientsOnHand.cs">
       <DependentUpon>VocatusDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UserDrinkModel.cs" />
     <Compile Include="Models\VocatusDB.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -272,6 +276,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\CocktailModel\" />
+    <Folder Include="Views\UserDrinkModel\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

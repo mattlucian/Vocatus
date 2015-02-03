@@ -1,4 +1,4 @@
-﻿@model  
+﻿@model IEnumerable<Vocatus.Models.Ingredient>
 @{
     ViewBag.Title = "MyDrinks";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -7,4 +7,19 @@
 <h2>MyDrinks</h2>
 
 <p>This page allows the user to select what drinks they have and it provides them with cocktail suggestions</p>
+
+<h3>All Ingredients on Hand</h3>
+@{
+    int count = 0;   
+}
+@foreach (var i in Model)
+{
+    <p>@count . @i.name</p>
+    count++;
+}
+<h4>Add a new Ingredient:</h4>
+
+
+
+<h3>Possible Drink Combinations:</h3>
 

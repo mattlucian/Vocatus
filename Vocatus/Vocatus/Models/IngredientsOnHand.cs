@@ -12,13 +12,10 @@ namespace Vocatus.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class IngredientsOnHand
     {
-        public int user_id { get; set; }
+        public int id { get; set; }
         public string user_name { get; set; }
-        public string email { get; set; }
-        public string password { get; set; }
-        public string salt { get; set; }
-        public Nullable<int> access_level { get; set; }
+        public int ingredient_id { get; set; }
     }
 }

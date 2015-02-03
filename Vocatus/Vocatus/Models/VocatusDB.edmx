@@ -5,21 +5,33 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="DB_84924_vocatusModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar(max)" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="Discriminator" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
         <EntityType Name="Cocktail">
           <Key>
             <PropertyRef Name="cocktail_id" />
           </Key>
-          <Property Name="cocktail_id" Type="int" Nullable="false" />
+          <Property Name="cocktail_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="cocktail_name" Type="varchar" MaxLength="150" />
           <Property Name="cocktail_image_path" Type="varchar" MaxLength="255" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DB_84924_vocatus.Vocatus.Combination' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Combination">
           <Key>
             <PropertyRef Name="id" />
             <PropertyRef Name="cocktail_id" />
             <PropertyRef Name="ingredients_id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="cocktail_id" Type="int" Nullable="false" />
           <Property Name="ingredients_id" Type="int" Nullable="false" />
         </EntityType>
@@ -27,23 +39,24 @@
           <Key>
             <PropertyRef Name="ingredients_id" />
           </Key>
-          <Property Name="ingredients_id" Type="int" Nullable="false" />
+          <Property Name="ingredients_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="type" Type="varchar" MaxLength="50" />
           <Property Name="subtype" Type="varchar" MaxLength="50" />
           <Property Name="name" Type="varchar" MaxLength="255" />
         </EntityType>
-        <EntityType Name="User">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DB_84924_vocatus.Vocatus.IngredientsOnHand' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="IngredientsOnHand">
           <Key>
-            <PropertyRef Name="user_id" />
+            <PropertyRef Name="id" />
+            <PropertyRef Name="user_name" />
+            <PropertyRef Name="ingredient_id" />
           </Key>
-          <Property Name="user_id" Type="int" Nullable="false" />
-          <Property Name="user_name" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="email" Type="varchar" MaxLength="150" />
-          <Property Name="password" Type="varchar" MaxLength="255" />
-          <Property Name="salt" Type="varchar" MaxLength="255" />
-          <Property Name="access_level" Type="int" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ingredient_id" Type="int" Nullable="false" />
         </EntityType>
-        <Association Name="FK__Combinati__cockt__36B12243">
+        <Association Name="FK__Combinati__cockt__4316F928">
           <End Role="Cocktail" Type="Self.Cocktail" Multiplicity="1" />
           <End Role="Combination" Type="Self.Combination" Multiplicity="*" />
           <ReferentialConstraint>
@@ -55,7 +68,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Combinati__ingre__37A5467C">
+        <Association Name="FK__Combinati__ingre__440B1D61">
           <End Role="Ingredient" Type="Self.Ingredient" Multiplicity="1" />
           <End Role="Combination" Type="Self.Combination" Multiplicity="*" />
           <ReferentialConstraint>
@@ -68,15 +81,28 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="DB_84924_vocatusModelStoreContainer">
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cocktail" EntityType="Self.Cocktail" Schema="Vocatus" store:Type="Tables" />
-          <EntitySet Name="Combination" EntityType="Self.Combination" Schema="Vocatus" store:Type="Tables" />
           <EntitySet Name="Ingredient" EntityType="Self.Ingredient" Schema="Vocatus" store:Type="Tables" />
-          <EntitySet Name="User" EntityType="Self.User" Schema="Vocatus" store:Type="Tables" />
-          <AssociationSet Name="FK__Combinati__cockt__36B12243" Association="Self.FK__Combinati__cockt__36B12243">
+          <EntitySet Name="Combination" EntityType="Self.Combination" store:Type="Tables" store:Schema="Vocatus">
+            <DefiningQuery>SELECT 
+    [Combination].[id] AS [id], 
+    [Combination].[cocktail_id] AS [cocktail_id], 
+    [Combination].[ingredients_id] AS [ingredients_id]
+    FROM [Vocatus].[Combination] AS [Combination]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="IngredientsOnHand" EntityType="Self.IngredientsOnHand" store:Type="Tables" store:Schema="Vocatus">
+            <DefiningQuery>SELECT 
+    [IngredientsOnHand].[id] AS [id], 
+    [IngredientsOnHand].[user_name] AS [user_name], 
+    [IngredientsOnHand].[ingredient_id] AS [ingredient_id]
+    FROM [Vocatus].[IngredientsOnHand] AS [IngredientsOnHand]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__Combinati__cockt__4316F928" Association="Self.FK__Combinati__cockt__4316F928">
             <End Role="Cocktail" EntitySet="Cocktail" />
             <End Role="Combination" EntitySet="Combination" />
           </AssociationSet>
-          <AssociationSet Name="FK__Combinati__ingre__37A5467C" Association="Self.FK__Combinati__ingre__37A5467C">
+          <AssociationSet Name="FK__Combinati__ingre__440B1D61" Association="Self.FK__Combinati__ingre__440B1D61">
             <End Role="Ingredient" EntitySet="Ingredient" />
             <End Role="Combination" EntitySet="Combination" />
           </AssociationSet>
@@ -89,7 +115,6 @@
           <EntitySet Name="Cocktails" EntityType="VocatusModel.Cocktail" />
           <EntitySet Name="Combinations" EntityType="VocatusModel.Combination" />
           <EntitySet Name="Ingredients" EntityType="VocatusModel.Ingredient" />
-          <EntitySet Name="Users" EntityType="VocatusModel.User" />
           <AssociationSet Name="FK__Combinati__cockt__36B12243" Association="VocatusModel.FK__Combinati__cockt__36B12243">
             <End Role="Cocktail" EntitySet="Cocktails" />
             <End Role="Combination" EntitySet="Combinations" />
@@ -98,6 +123,8 @@
             <End Role="Ingredient" EntitySet="Ingredients" />
             <End Role="Combination" EntitySet="Combinations" />
           </AssociationSet>
+          <EntitySet Name="IngredientsOnHands" EntityType="VocatusModel.IngredientsOnHand" />
+          <EntitySet Name="AspNetUsers" EntityType="VocatusModel.AspNetUser" />
         </EntityContainer>
         <EntityType Name="Cocktail">
           <Key>
@@ -130,17 +157,6 @@
           <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Combinations" Relationship="VocatusModel.FK__Combinati__ingre__37A5467C" FromRole="Ingredient" ToRole="Combination" />
         </EntityType>
-        <EntityType Name="User">
-          <Key>
-            <PropertyRef Name="user_id" />
-          </Key>
-          <Property Name="user_id" Type="Int32" Nullable="false" />
-          <Property Name="user_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="email" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="salt" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="access_level" Type="Int32" />
-        </EntityType>
         <Association Name="FK__Combinati__cockt__36B12243">
           <End Type="VocatusModel.Cocktail" Role="Cocktail" Multiplicity="1" />
           <End Type="VocatusModel.Combination" Role="Combination" Multiplicity="*" />
@@ -165,6 +181,26 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="IngredientsOnHand">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="user_name" />
+            <PropertyRef Name="ingredient_id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ingredient_id" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Discriminator" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -199,15 +235,23 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="VocatusModel.User">
-              <MappingFragment StoreEntitySet="User">
-                <ScalarProperty Name="access_level" ColumnName="access_level" />
-                <ScalarProperty Name="salt" ColumnName="salt" />
-                <ScalarProperty Name="password" ColumnName="password" />
-                <ScalarProperty Name="email" ColumnName="email" />
+          <EntitySetMapping Name="IngredientsOnHands">
+            <EntityTypeMapping TypeName="VocatusModel.IngredientsOnHand">
+              <MappingFragment StoreEntitySet="IngredientsOnHand">
+                <ScalarProperty Name="ingredient_id" ColumnName="ingredient_id" />
                 <ScalarProperty Name="user_name" ColumnName="user_name" />
-                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="VocatusModel.AspNetUser">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="Discriminator" ColumnName="Discriminator" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -18,10 +18,33 @@ namespace Vocatus.Controllers
 
         public ActionResult MyDrinks()
         {
+            if (Request.IsAuthenticated)
+            {
 
-            
-            return View();
+                VocatusEntities db = new VocatusEntities();
+                var name = this.User.Identity.Name;
+                var ingredientsOnHandList = db.IngredientsOnHands.Where(i => i.user_name == name);
+                if (ingredientsOnHandList == null || !ingredientsOnHandList.Any())
+                {
+                    return View(new List<Ingredient>());
+                }
+                var realList = ingredientsOnHandList.ToList();
+                List<Ingredient> results = new List<Ingredient>();
+
+                foreach (IngredientsOnHand s in realList)
+                {
+                    results.Add(db.Ingredients.Where(x => x.ingredients_id == s.ingredient_id).FirstOrDefault());
+                }
+                return View(results);
+
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
         }
+
+        
 
 
         public ActionResult Explore()
