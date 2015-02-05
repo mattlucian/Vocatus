@@ -10,14 +10,14 @@
 <div>
     <p>On this page, we will list top rated drinks that the user can add to their "wishlist" or something of the sort</p>
 </div>
-    <div style="width:100%;height:600px">
+    <div style="width:100%;height:100%">
 
     @foreach (var c in Model)
     {
         <div style="border:solid;width:150px;float:left">
             <img src="@c.cocktailImagePath" style="width:144px;height:150px" />
             <h4 style="text-decoration:underline">@(c.cocktailName != null ? c.cocktailName : "")</h4>
-
+             
             @foreach (var i in c.ingredients)
             {
                 <p>-- @i </p>

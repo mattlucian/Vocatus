@@ -24,10 +24,7 @@ namespace Vocatus.Controllers
                 VocatusEntities db = new VocatusEntities();
                 var name = this.User.Identity.Name;
                 var ingredientsOnHandList = db.IngredientsOnHands.Where(i => i.user_name == name);
-                if (ingredientsOnHandList == null || !ingredientsOnHandList.Any())
-                {
-                    return View(new List<Ingredient>());
-                }
+
                 var realList = ingredientsOnHandList.ToList();
                 List<Ingredient> results = new List<Ingredient>();
                 UserDrinkModel udm = new UserDrinkModel();
@@ -52,7 +49,7 @@ namespace Vocatus.Controllers
                     {
                         remainingLiqours.Add(new SelectListItem { Text = ie.name, Value = "" + ie.ingredients_id });
                     }
-                    else if (ie.type == "Cordials")
+                    else if (ie.type == "Cordial")
                     {
                         remainingCordials.Add(new SelectListItem { Text = ie.name, Value = "" + ie.ingredients_id });
                     }
