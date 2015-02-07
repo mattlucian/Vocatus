@@ -3,6 +3,7 @@
     ViewBag.Title = "MyDrinks";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<script src="../../Scripts/Vocatus.js"></script>
 
 <h2>MyDrinks</h2>
 
@@ -14,32 +15,44 @@
 }
 @foreach (var i in Model.allCurrentIngredients)
 {
-    <p>@count . @i.name</p>
+    <p>@count . @i.name <button onclick="removeIngredient(@i.ingredients_id)">Remove</button></p>
     count++;
 }
 <h4>Add a new Ingredient:</h4>
 
+
 <div style="width:100%;float:left">
-    <div style="width:30%;float:left">
-        <strong>Liquors</strong>
-        @Html.DropDownList("RemainingLiqours")
-        <button>Add</button>    
+    <div style="width:30%;float:left;border:solid;margin:10px;padding:10px">
+        <strong>Liquors</strong><br />
+        @Html.DropDownList("RemainingLiquors")
+        <br /><button onclick="addLiquor()">Add</button>
     </div>
-    <div style="width:30%;float:left">
-        <strong>Cordials</strong>
+    <div style="width:30%;float:left;border:solid;margin:10px;padding:10px">
+        <strong>Liqueurs</strong><br />
+        @Html.DropDownList("RemainingLiqueurs")
+        <br /><button onclick="addLiqueur()">Add</button>
+    </div>
+    <div style="width:30%;float:left;border:solid;margin:10px;padding:10px">
+        <strong>Cordials</strong><br />
         @Html.DropDownList("RemainingCordials")
-        <button>Add</button>
+        <br /><button onclick="addCordial()">Add</button>
     </div>
-    <div style="width:30%;float:left">
-        <strong>Misc</strong>
+    <div style="width:30%;float:left;border:solid;margin:10px;padding:10px">
+        <strong>Mixers</strong><br />
+        @Html.DropDownList("RemainingMixers")
+        <br /><button onclick="addMixer()">Add</button>
+    </div>
+    <div style="width:30%;float:left;border:solid;margin:10px;padding:10px">
+        <strong>Wines</strong><br />
+        @Html.DropDownList("RemainingWines")
+        <br /><button onclick="addWine()">Add</button>
+    </div>
+    <div style="width:30%;float:left;border:solid;margin:10px;padding:10px">
+        <strong>Misc</strong><br />
         @Html.DropDownList("RemainingMisc")
-        <button>Add</button>
+        <br /><button onclick="addMisc()">Add</button>
     </div>
-
 </div>
-
-
-
 
 
 <div style="width:100%;float:left">

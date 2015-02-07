@@ -12,6 +12,8 @@ namespace Vocatus.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class VocatusEntities : DbContext
     {
@@ -30,5 +32,31 @@ namespace Vocatus.Models
         public virtual DbSet<IngredientsOnHand> IngredientsOnHands { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<Ingredient> Ingredients { get; set; }
+    
+        public virtual int InsertIngredient(Nullable<int> iNG_ID, string uSER_NAME)
+        {
+            var iNG_IDParameter = iNG_ID.HasValue ?
+                new ObjectParameter("ING_ID", iNG_ID) :
+                new ObjectParameter("ING_ID", typeof(int));
+    
+            var uSER_NAMEParameter = uSER_NAME != null ?
+                new ObjectParameter("USER_NAME", uSER_NAME) :
+                new ObjectParameter("USER_NAME", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertIngredient", iNG_IDParameter, uSER_NAMEParameter);
+        }
+    
+        public virtual int RemoveIngredient(string uSER_NAME, Nullable<int> iNG_ID)
+        {
+            var uSER_NAMEParameter = uSER_NAME != null ?
+                new ObjectParameter("USER_NAME", uSER_NAME) :
+                new ObjectParameter("USER_NAME", typeof(string));
+    
+            var iNG_IDParameter = iNG_ID.HasValue ?
+                new ObjectParameter("ING_ID", iNG_ID) :
+                new ObjectParameter("ING_ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("RemoveIngredient", uSER_NAMEParameter, iNG_IDParameter);
+        }
     }
 }

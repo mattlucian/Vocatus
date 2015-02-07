@@ -79,6 +79,14 @@ warning 6002: The table/view 'DB_84924_vocatus.Vocatus.IngredientsOnHand' does n
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="InsertIngredient" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Vocatus">
+          <Parameter Name="ING_ID" Type="int" Mode="In" />
+          <Parameter Name="USER_NAME" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="RemoveIngredient" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Vocatus">
+          <Parameter Name="USER_NAME" Type="varchar" Mode="In" />
+          <Parameter Name="ING_ID" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="DB_84924_vocatusModelStoreContainer">
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cocktail" EntityType="Self.Cocktail" Schema="Vocatus" store:Type="Tables" />
@@ -105,7 +113,7 @@ warning 6002: The table/view 'DB_84924_vocatus.Vocatus.IngredientsOnHand' does n
             <End Role="Ingredient" EntitySet="Ingredient" />
             <End Role="Combination" EntitySet="Combination" />
           </AssociationSet>
-          </EntityContainer>
+        </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -124,6 +132,14 @@ warning 6002: The table/view 'DB_84924_vocatus.Vocatus.IngredientsOnHand' does n
             <End Role="Ingredient" EntitySet="Ingredients" />
             <End Role="Combination" EntitySet="Combinations" />
           </AssociationSet>
+          <FunctionImport Name="InsertIngredient">
+            <Parameter Name="ING_ID" Mode="In" Type="Int32" />
+            <Parameter Name="USER_NAME" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="RemoveIngredient">
+            <Parameter Name="USER_NAME" Mode="In" Type="String" />
+            <Parameter Name="ING_ID" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="Cocktail">
           <Key>
@@ -231,6 +247,18 @@ warning 6002: The table/view 'DB_84924_vocatus.Vocatus.IngredientsOnHand' does n
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
+            <EntityTypeMapping TypeName="VocatusModel.IngredientsOnHand">
+              <ModificationFunctionMapping>
+                <InsertFunction FunctionName="DB_84924_vocatusModel.Store.InsertIngredient" >
+                  <ScalarProperty Name="user_name" ParameterName="USER_NAME" />
+                  <ScalarProperty Name="ingredient_id" ParameterName="ING_ID" />
+                </InsertFunction>
+                <DeleteFunction FunctionName="DB_84924_vocatusModel.Store.RemoveIngredient" >
+                  <ScalarProperty Name="ingredient_id" ParameterName="ING_ID" />
+                  <ScalarProperty Name="user_name" ParameterName="USER_NAME" />
+                </DeleteFunction>
+              </ModificationFunctionMapping>
+            </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUsers">
             <EntityTypeMapping TypeName="VocatusModel.AspNetUser">
@@ -252,6 +280,8 @@ warning 6002: The table/view 'DB_84924_vocatus.Vocatus.IngredientsOnHand' does n
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="InsertIngredient" FunctionName="DB_84924_vocatusModel.Store.InsertIngredient" />
+          <FunctionImportMapping FunctionImportName="RemoveIngredient" FunctionName="DB_84924_vocatusModel.Store.RemoveIngredient" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

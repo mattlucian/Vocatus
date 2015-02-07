@@ -38,8 +38,11 @@ namespace Vocatus.Controllers
                 }
                 udm.allCurrentIngredients = results;
 
-                List<SelectListItem> remainingLiqours = new List<SelectListItem>();
+                List<SelectListItem> remainingLiquors = new List<SelectListItem>();
                 List<SelectListItem> remainingCordials = new List<SelectListItem>();
+                List<SelectListItem> remainingMixers = new List<SelectListItem>();
+                List<SelectListItem> remainingLiqueurs = new List<SelectListItem>();
+                List<SelectListItem> remainingWines = new List<SelectListItem>();
                 List<SelectListItem> remainingMisc = new List<SelectListItem>();
 
 
@@ -47,22 +50,36 @@ namespace Vocatus.Controllers
                 {
                     if (ie.type == "Liquor")
                     {
-                        remainingLiqours.Add(new SelectListItem { Text = ie.name, Value = "" + ie.ingredients_id });
+                        remainingLiquors.Add(new SelectListItem { Text = ie.name, Value = "" + ie.ingredients_id });
                     }
                     else if (ie.type == "Cordial")
                     {
                         remainingCordials.Add(new SelectListItem { Text = ie.name, Value = "" + ie.ingredients_id });
                     }
-                    else
+                    else if (ie.type == "Wine")
+                    {
+                        remainingWines.Add(new SelectListItem { Text = ie.name, Value = "" + ie.ingredients_id });
+                    }
+                    else if (ie.type == "Liqueur")
+                    {
+                        remainingLiqueurs.Add(new SelectListItem { Text = ie.name, Value = "" + ie.ingredients_id });
+                    }
+                    else if (ie.type == "Mixer")
+                    {
+                        remainingMixers.Add(new SelectListItem { Text = ie.name, Value = "" + ie.ingredients_id });
+                    }
+                    else if(ie.type == "Misc")
                     {
                         remainingMisc.Add(new SelectListItem { Text = ie.name, Value = "" + ie.ingredients_id });
                     }
                     
                 }
-                ViewBag.RemainingLiqours = remainingLiqours;
+                ViewBag.RemainingLiquors = remainingLiquors;
                 ViewBag.RemainingCordials = remainingCordials;
                 ViewBag.RemainingMisc = remainingMisc;
-
+                ViewBag.RemainingWines = remainingWines;
+                ViewBag.RemainingLiqueurs = remainingLiqueurs;
+                ViewBag.RemainingMixers = remainingMixers;
 
                 var allCocktails = db.Cocktails.ToList();
                 udm.allPossibleCocktails = allCocktails.ToList();
@@ -103,6 +120,52 @@ namespace Vocatus.Controllers
                 return RedirectToAction("Login", "Account");
             }
         }
+
+        public void InsertIngredientForUser(int ingredientID)
+        {
+            if (Request.IsAuthenticated)
+            {
+
+                VocatusEntities db = new VocatusEntities();
+                db.IngredientsOnHands.Add(new IngredientsOnHand
+                {
+                    user_name = User.Identity.Name,
+                    ingredient_id = ingredientID
+                });
+
+                db.SaveChanges();
+            }
+            else
+            {
+                RedirectToAction("Login", "Account");
+            }
+        }
+
+        public void RemoveIngredientForUser(int ingredientID)
+        {
+            if (Request.IsAuthenticated)
+            {
+
+                VocatusEntities db = new VocatusEntities();
+                
+                IngredientsOnHand ioh = new IngredientsOnHand
+                {
+                    user_name = User.Identity.Name,
+                    ingredient_id = ingredientID
+                };
+
+                db.IngredientsOnHands.Attach(ioh);
+
+                db.IngredientsOnHands.Remove(ioh);
+
+                db.SaveChanges();
+            }
+            else
+            {
+                RedirectToAction("Login", "Account");
+            }
+        }
+
 
         public ActionResult Explore()
         {
