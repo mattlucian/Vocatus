@@ -110,6 +110,23 @@ namespace Vocatus.Controllers
                         }
                     }
                 }
+
+                foreach (Cocktail c in udm.allPossibleCocktails)
+                {
+                    List<int> comboIds = db.Combinations.Where(co => co.cocktail_id == c.cocktail_id).Select(co=>co.ingredients_id).ToList();
+                    List<String> combos = new List<String>();
+                    foreach (int id in comboIds)
+                    {
+                        combos.Add(db.Ingredients.Where(i=>i.ingredients_id == id).Select(i => i.name).FirstOrDefault());
+                    }
+
+                    udm.allCocktailCombinations.Add(new CocktailModel
+                    {
+                        ingredients = combos,
+                        cocktailName = c.cocktail_name,
+                        cocktailImagePath = c.cocktail_image_path
+                    });
+                }
                     
 
                 return View(udm);
