@@ -48,3 +48,24 @@ input[type="checkbox"].input-validation-error {
     margin:5px;
     padding:3px;
 }
+
+div.explore-drinks{
+    border:solid;
+    width:150px;
+    float:left;
+    border-width:4px;
+    margin:1px;
+    height:210px;
+}
+
+.explore-drinks-ingredients{
+    display:none;
+}
+
+div.explore-drinks:hover{
+    height:auto;
+}
+div.explore-drinks:hover .explore-drinks-ingredients{
+    display:block;
+}
+
