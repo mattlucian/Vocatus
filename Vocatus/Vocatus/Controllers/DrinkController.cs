@@ -36,7 +36,7 @@ namespace Vocatus.Controllers
                     results.Add(db.Ingredients.Where(x => x.ingredients_id == s.ingredient_id).FirstOrDefault());
                     udm.allPossibleIngredients.Remove(db.Ingredients.Where(i => i.ingredients_id == s.ingredient_id).FirstOrDefault());
                 }
-                udm.allCurrentIngredients = results;
+                udm.allCurrentIngredients = results.OrderBy(r=>r.name).ToList();
 
                 List<SelectListItem> remainingLiquors = new List<SelectListItem>();
                 List<SelectListItem> remainingCordials = new List<SelectListItem>();
@@ -87,6 +87,13 @@ namespace Vocatus.Controllers
                 foreach (Cocktail c in allCocktails)
                 {
                     List<Combination> combinations = db.Combinations.Where(j => j.cocktail_id == c.cocktail_id).ToList();
+                    List<String> combz = new List<String>();
+                    foreach (Combination id in combinations)
+                    {
+                        combz.Add(db.Ingredients.Where(i => i.ingredients_id == id.ingredients_id).Select(i => i.name).FirstOrDefault());
+                    }
+
+
                     bool[] validChecks = new bool[combinations.Count];
                     int count = 0;
                     foreach (Combination g in combinations)
@@ -99,6 +106,27 @@ namespace Vocatus.Controllers
                             }    
                         }
                         count++;
+                    }
+
+                    int checkCount = 0;
+                    foreach(bool check in validChecks){
+                        if(check == true){
+                            checkCount++;
+                        }
+                    }
+                    if((validChecks.Count() -1 ) == checkCount ){
+                        
+
+
+                        // just missing 1 ingredient
+                        udm.allPartialCocktailCombinations.Add(new CocktailModel
+                        {
+                            cocktailImagePath = c.cocktail_image_path,
+                            cocktailName = c.cocktail_name,
+                            ingredients = combz,
+                            partialIngredients = validChecks.ToList()
+                        });
+
                     }
 
                     foreach (bool check in validChecks)
@@ -127,8 +155,8 @@ namespace Vocatus.Controllers
                         cocktailImagePath = c.cocktail_image_path
                     });
                 }
-                    
 
+                udm.allCocktailCombinations = udm.allCocktailCombinations.OrderBy(co => co.cocktailName).ToList();
                 return View(udm);
 
             }

@@ -10,6 +10,7 @@ namespace Vocatus.Models
     {
         public String cocktailName;
         public List<String> ingredients = new List<String>();
+        public List<bool> partialIngredients = new List<bool>();
         public String cocktailImagePath;
 	}
 }

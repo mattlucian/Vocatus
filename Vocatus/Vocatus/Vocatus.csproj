@@ -184,6 +184,7 @@
     <Compile Include="Models\IngredientsOnHand.cs">
       <DependentUpon>VocatusDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PartialIngredient.cs" />
     <Compile Include="Models\UserDrinkModel.cs" />
     <Compile Include="Models\VocatusDB.Context.cs">
       <AutoGen>True</AutoGen>
@@ -275,6 +276,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\CocktailModel\" />
+    <Folder Include="Views\PartialIngredient\" />
     <Folder Include="Views\UserDrinkModel\" />
   </ItemGroup>
   <ItemGroup>

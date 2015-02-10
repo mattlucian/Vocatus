@@ -12,6 +12,7 @@ namespace Vocatus.Models
         public List<Ingredient> allCurrentIngredients = new List<Ingredient>();
         public List<Cocktail> allPossibleCocktails = new List<Cocktail>();
         public List<CocktailModel> allCocktailCombinations = new List<CocktailModel>();
+        public List<CocktailModel> allPartialCocktailCombinations = new List<CocktailModel>();
 
 
 	}
