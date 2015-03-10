@@ -1,6 +1,7 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background-color:#222;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -26,7 +27,7 @@ textarea {
 }
 
 input.input-validation-error {
-    border: 1px solid #b94a48;
+    border: 1px solid #b94a48; 
 }
 
 input[type="checkbox"].input-validation-error {
@@ -56,6 +57,7 @@ div.explore-drinks{
     border-width:4px;
     margin:1px;
     height:210px;
+    text-align:center;
 }
 
 .explore-drinks-ingredients{
@@ -63,9 +65,10 @@ div.explore-drinks{
 }
 
 div.explore-drinks:hover{
-    height:auto;
+    /*height:auto;*/
+    border-color:darkred;
 }
 div.explore-drinks:hover .explore-drinks-ingredients{
-    display:block;
+    /*display:block;*/
 }
 

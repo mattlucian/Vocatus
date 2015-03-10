@@ -8,7 +8,7 @@ ul.tabs
     text-align: center; /*set to left, center, or right to align the tabs as desired*/
     border:1px solid black;
     border-bottom:none;
-    background:#BBBBBB;
+    background:#DDD;
 }
         
 ul.tabs li

@@ -123,6 +123,7 @@ namespace Vocatus.Controllers
                         {
                             cocktailImagePath = c.cocktail_image_path,
                             cocktailName = c.cocktail_name,
+                            cocktailId = c.cocktail_id,
                             ingredients = combz,
                             partialIngredients = validChecks.ToList()
                         });
@@ -152,6 +153,7 @@ namespace Vocatus.Controllers
                     {
                         ingredients = combos,
                         cocktailName = c.cocktail_name,
+                        cocktailId = c.cocktail_id,
                         cocktailImagePath = c.cocktail_image_path
                     });
                 }
@@ -211,21 +213,27 @@ namespace Vocatus.Controllers
             }
         }
 
-
-        public ActionResult Explore()
+        public ActionResult Explore(string filter = "")
         {
-            //TODO:
             VocatusEntities db = new VocatusEntities();
-            
-            // gets all the cocktails from the DB
-            var cocktails = db.Cocktails.ToList();
+
+            List<Cocktail> cocktails = null;
+            if (!filter.Equals(""))
+            {
+                cocktails = db.Cocktails.Where(x => x.cocktail_name.Contains(filter)).ToList();
+            }
+            else
+            {
+                cocktails = db.Cocktails.ToList();
+            }
 
             List<CocktailModel> drinks = new List<CocktailModel>();
 
             foreach(Cocktail c in cocktails){
                 List<Combination> incredientsFound = db.Combinations.Where(z => z.cocktail_id == c.cocktail_id).ToList();
-                CocktailModel cm = new CocktailModel()
+                CocktailModel cm = new CocktailModel() 
                 {
+                    cocktailId = c.cocktail_id,
                     cocktailName = c.cocktail_name,
                     cocktailImagePath = c.cocktail_image_path
                 };

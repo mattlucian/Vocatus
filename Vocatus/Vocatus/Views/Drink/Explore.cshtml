@@ -4,25 +4,79 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Explore</h2>
+<script src="../Scripts/jquery-1.10.2.js"></script>
 
+<script>
+    $(function () {
+        $('.explore-drinks').click(function () {
+            var id = "#" + $(this).children('div').attr('id');
+            var titleId = "#" + $(this).children('h4').attr('id');
+            var imageId = "#" + $(this).children('img').attr('id');
 
-<div>
-    <p>On this page, we will list top rated drinks that the user can add to their "wishlist" or something of the sort</p>
-</div>
-    <div style="width:100%;height:auto; overflow:auto;">
+            var populateid = "#displayed-ingredient-list"
+            var populateTitleId = "#focused-drink-title";
+            var populateImageId = "#focused-ingredient-image";
 
-    @foreach (var c in Model)
-    {
-        <div class="explore-drinks">
-            <img src="@c.cocktailImagePath" style="width:144px;height:150px" />
-            <h4 style="text-decoration:underline">@(c.cocktailName != null ? c.cocktailName : "")</h4>
+            // object clicked
+            var obj = $(id);
 
-            @foreach (var i in c.ingredients)
-            {
-                <p class ="explore-drinks-ingredients">-- @i </p>
-            }
+            // for each <li> element, append this to display area
+            var htmlString = "";
+            $.each(obj.children('li'), function (index, value) {
+                htmlString += "<li>" + value.textContent + "</li>";
+            });
+
+            $(populateid).html(htmlString);
+            $(populateTitleId).text($(titleId).text());
+            $(populateImageId).attr('src',($(imageId).attr('src')));
+        });
+
+    });
+</script>
+<body>
+    <div style="width:1080px;height:100%">
+
+        <div style="width:250px;height:auto;margin-top:7%;position:fixed;float:left;border:solid;padding:15px">
+            <h2 id="focused-drink-title">Title</h2>
+
+            <img id="focused-ingredient-image" src="" style="width:144px;height:150px" />
+
+            <ul id="displayed-ingredient-list" style="height:auto">
+
+            </ul>
+
 
         </div>
-    }
-</div>
+        <div style="margin-left:280px;width:800px;float:left">
+
+            <h2>Explore</h2>
+
+
+            <div>
+                <p>On this page, we will list top rated drinks that the user can add to their "wishlist" or something of the sort</p>
+            </div>
+            <div style="width:100%;height:auto; overflow:auto;">
+
+                @foreach (var c in Model)
+                {
+                    <div class="explore-drinks">
+                        <img id="ingredient_image_@c.cocktailId" src="@c.cocktailImagePath" style="width:144px;height:150px" />
+                        <h4 id="ingredient_name_@c.cocktailId" style="text-decoration:underline">@(c.cocktailName != null ? c.cocktailName : "")</h4>
+
+                        <div id="ingredient-list-@c.cocktailId">
+                            @foreach (var i in c.ingredients)
+                            {
+                                <li class="explore-drinks-ingredients">-- @i </li>
+                            }
+                        </div>
+
+                    </div>
+                }
+            </div>
+
+
+        </div>
+
+    </div>
+
+</body>

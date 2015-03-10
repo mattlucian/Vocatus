@@ -275,9 +275,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\CocktailModel\" />
-    <Folder Include="Views\PartialIngredient\" />
-    <Folder Include="Views\UserDrinkModel\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
