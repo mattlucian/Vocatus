@@ -9,7 +9,7 @@
     Florida for the time being. If you need to get in contact with a specific member, please use the e-mails below.
     <br/><br/>
     <address>
-        <table>
+        <table cellpadding="5">
             <thead>
                 <tr>
                     <td><strong>Title</strong></td>
@@ -48,28 +48,61 @@
 <p>For all inquiries for us as a team, please use the "Contact form" found directly below instead. This form will
     yield quicker responses than individual e-mails.</p>   
 
-<form>
-    <table>
+
+
+    <table cellpadding="5">
         <tr>
             <td>Your Name:</td>
-            <td><input type="text" id="contactName" name="contactName" /></td>
+            <td><input style="width:200px" type="text" id="contactName" name="contactName" /></td>
         </tr>
         <tr>
             <td>Your Email:</td>
-            <td><input type="text" id="contactEmail" name="contactEmail" /></td>
+            <td><input style="width:200px" type="text" id="contactEmail" name="contactEmail" /></td>
         </tr>
         <tr>
             <td>Reason for Contact:</td>
-            <td><textarea id="contactReason" name="contactReason" ></textarea></td>
+            <td><textarea style="width:400px; height:100px;" id="contactReason" name="contactReason"></textarea></td>
         </tr>
-        <tr><td><input type="submit" value="Send" /></td></tr>
-     </table>
-</form>
+        <tr><td><button onclick="sendEmail()" >Send</button></td></tr>
+    </table>
+    <label id="emailOutput" style="width:0px; background-color:white; color:black; margin-top:auto; margin-bottom:auto;"></label>
+
+
+
+<script type="text/javascript" >
+    function sendEmail() {
+        
+        var name = document.getElementById("contactName").value;
+        var email = document.getElementById("contactEmail").value;
+        var message = document.getElementById("contactReason").value;
+
+        $.ajax({
+            url: '/Home/SendEmail',
+            data: 'message=' + message+"&senderEmail="+email+"&name="+name,
+            contentType: "application/json"
+        }).success(function (result) {
+            var outputLabel = document.getElementById("emailOutput");
+            outputLabel.innerHTML = "Email Sent";
+            outputLabel.style.backgroundColor = "#222";
+            outputLabel.style.color = "green";
+            outputLabel.style.width = "300px";    
+
+        }).fail(function (result) {
+            var outputLabel = document.getElementById("emailOutput")
+            outputLabel.innerHTML = "Error Sending Email";
+            outputLabel.style.backgroundColor = "#222";
+            outputLabel.style.color = "red";
+            outputLabel.style.width = "300px";
+
+        });
+
+    }
+</script>
 
 <br/>
 <br />
 
-<h3>Open Source Resources</h3>
+<h3>Open Source Resources:</h3>
 
 <!-- To Add a New Resource copy this: 
     <tr>
@@ -79,10 +112,10 @@
     </tr>
     -->
 
-<table>
+<table cellpadding="5">
     <thead>
         <tr>
-            <td><strong>Item</strong></td>
+            <td ><strong>Item</strong></td>
             <td><strong>Creditor</strong></td>
             <td><strong>Resource link</strong></td>
         </tr>
