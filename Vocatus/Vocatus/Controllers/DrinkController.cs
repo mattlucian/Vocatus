@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -15,6 +17,7 @@ namespace Vocatus.Controllers
         {
             return View();
         }
+
 
         public ActionResult MyDrinks()
         {
@@ -159,6 +162,7 @@ namespace Vocatus.Controllers
                 }
 
                 udm.allCocktailCombinations = udm.allCocktailCombinations.OrderBy(co => co.cocktailName).ToList();
+                udm.ratedCocktails = GetMyRatedCocktails();
                 return View(udm);
 
             }
@@ -168,6 +172,53 @@ namespace Vocatus.Controllers
             }
         }
 
+        public List<CocktailModel> GetMyRatedCocktails()
+        {
+            VocatusEntities db = new VocatusEntities();
+            var user = User.Identity.Name;
+            var userid = db.AspNetUsers.Where(x => x.UserName == user).Select(x => x.Id).FirstOrDefault();
+
+            List<CocktailModel> results = new List<CocktailModel>();
+
+            var query = db.Cocktails
+               .Join(db.CocktailRatings,
+                  c => c.cocktail_id,
+                  cr => cr.cocktail_id,
+                  (c, cr) => new { Cocktail = c, CocktailRating = cr })
+               .Where(combo => combo.CocktailRating.user_id == userid)
+               .Select(c => new { c.Cocktail.cocktail_id, c.Cocktail.cocktail_image_path, c.Cocktail.cocktail_name, c.CocktailRating.rating });
+
+            foreach (var item in query)
+            {
+                CocktailModel cm = new CocktailModel();
+                cm.cocktailId = item.cocktail_id;
+                cm.cocktailImagePath = item.cocktail_image_path;
+                cm.cocktailName = item.cocktail_name;
+                cm.rating = item.rating;
+                cm.ingredients = GetCocktailIngredients(item.cocktail_id);
+                results.Add(cm);
+            }
+
+            return results;
+        }
+
+        public List<String> GetCocktailIngredients(int cid)
+        {
+            VocatusEntities db = new VocatusEntities();
+            var ingredients = db.Ingredients
+              .Join(db.Combinations,
+                 i => i.ingredients_id,
+                 c => c.ingredients_id,
+                 (i, c) => new { Ingredient = i, Combination = c })
+              .Where(combo => combo.Combination.cocktail_id == cid)
+              .Select(c => c.Ingredient.name);
+
+            if (ingredients != null)
+                return ingredients.ToList();
+
+            return new List<String>();
+        }
+         
         public void InsertIngredientForUser(int ingredientID)
         {
             if (Request.IsAuthenticated)
@@ -247,7 +298,40 @@ namespace Vocatus.Controllers
                 drinks.Add(cm);
             }
 
+            var ratings = GetAverageRatings();
+            foreach (var rating in ratings)
+            {
+                drinks.FirstOrDefault(x => x.cocktailId == rating.id).rating = rating.rating; 
+            }
+
             return View(drinks);
         }
+
+        public List<RatingKeyValuePair> GetAverageRatings()
+        {
+            List<RatingKeyValuePair> results = new List<RatingKeyValuePair>();
+            using (SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString()))
+            {
+                using (var command = new SqlCommand("[Vocatus].[GetAverageCocktailRatings]", conn)
+                {
+                    CommandType = CommandType.StoredProcedure
+                })
+                {
+                    conn.Open();
+                    var reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        results.Add(new RatingKeyValuePair()
+                        {
+                            id = Convert.ToInt32(reader["cocktail_id"]),
+                            rating = Convert.ToInt32(reader["avg_rating"])
+                        });
+                    }
+                    conn.Close();
+                    return results;
+                }
+            }
+        }
+
 	}
 }

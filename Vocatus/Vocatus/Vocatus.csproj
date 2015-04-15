@@ -163,6 +163,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DrinkController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\UserFunctionsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -174,6 +175,9 @@
       <DependentUpon>VocatusDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CocktailModel.cs" />
+    <Compile Include="Models\CocktailRating.cs">
+      <DependentUpon>VocatusDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Combination.cs">
       <DependentUpon>VocatusDB.tt</DependentUpon>
     </Compile>
@@ -205,6 +209,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\default_image.jpg" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\img\rumandcoke.png" />
@@ -248,7 +253,9 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\Vocatus.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -275,6 +282,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\UserFunctions\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

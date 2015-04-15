@@ -12,6 +12,9 @@
         <EntityTypeShape EntityType="VocatusModel.AspNetUser" Width="1.5" PointX="3.375" PointY="3.75" />
         <EntityTypeShape EntityType="VocatusModel.Ingredient" Width="1.5" PointX="0.75" PointY="3.875" />
         <AssociationConnector Association="VocatusModel.FK__Combinati__ingre__440B1D61" />
+        <EntityTypeShape EntityType="VocatusModel.CocktailRating" Width="1.5" PointX="5.625" PointY="3.375" />
+        <AssociationConnector Association="VocatusModel.FK_CocktailRating_AspNetUsers" />
+        <AssociationConnector Association="VocatusModel.FK_CocktailRating_Cocktail" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

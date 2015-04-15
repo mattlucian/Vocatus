@@ -23,6 +23,15 @@
           <Property Name="cocktail_name" Type="varchar" MaxLength="150" />
           <Property Name="cocktail_image_path" Type="varchar" MaxLength="255" />
         </EntityType>
+        <EntityType Name="CocktailRating">
+          <Key>
+            <PropertyRef Name="rating_id" />
+          </Key>
+          <Property Name="rating_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="rating" Type="int" Nullable="false" />
+          <Property Name="cocktail_id" Type="int" Nullable="false" />
+        </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'DB_84924_vocatus.Vocatus.Combination' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Combination">
@@ -79,6 +88,30 @@ warning 6002: The table/view 'DB_84924_vocatus.Vocatus.IngredientsOnHand' does n
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CocktailRating_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="CocktailRating" Type="Self.CocktailRating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CocktailRating">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CocktailRating_Cocktail">
+          <End Role="Cocktail" Type="Self.Cocktail" Multiplicity="1" />
+          <End Role="CocktailRating" Type="Self.CocktailRating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cocktail">
+              <PropertyRef Name="cocktail_id" />
+            </Principal>
+            <Dependent Role="CocktailRating">
+              <PropertyRef Name="cocktail_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Function Name="InsertIngredient" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Vocatus">
           <Parameter Name="ING_ID" Type="int" Mode="In" />
           <Parameter Name="USER_NAME" Type="varchar" Mode="In" />
@@ -90,6 +123,7 @@ warning 6002: The table/view 'DB_84924_vocatus.Vocatus.IngredientsOnHand' does n
         <EntityContainer Name="DB_84924_vocatusModelStoreContainer">
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cocktail" EntityType="Self.Cocktail" Schema="Vocatus" store:Type="Tables" />
+          <EntitySet Name="CocktailRating" EntityType="Self.CocktailRating" Schema="Vocatus" store:Type="Tables" />
           <EntitySet Name="Ingredient" EntityType="Self.Ingredient" Schema="Vocatus" store:Type="Tables" />
           <EntitySet Name="Combination" EntityType="Self.Combination" store:Type="Tables" store:Schema="Vocatus">
             <DefiningQuery>SELECT 
@@ -112,6 +146,14 @@ warning 6002: The table/view 'DB_84924_vocatus.Vocatus.IngredientsOnHand' does n
           <AssociationSet Name="FK__Combinati__ingre__440B1D61" Association="Self.FK__Combinati__ingre__440B1D61">
             <End Role="Ingredient" EntitySet="Ingredient" />
             <End Role="Combination" EntitySet="Combination" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CocktailRating_AspNetUsers" Association="Self.FK_CocktailRating_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="CocktailRating" EntitySet="CocktailRating" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CocktailRating_Cocktail" Association="Self.FK_CocktailRating_Cocktail">
+            <End Role="Cocktail" EntitySet="Cocktail" />
+            <End Role="CocktailRating" EntitySet="CocktailRating" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -140,6 +182,15 @@ warning 6002: The table/view 'DB_84924_vocatus.Vocatus.IngredientsOnHand' does n
             <Parameter Name="USER_NAME" Mode="In" Type="String" />
             <Parameter Name="ING_ID" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="CocktailRatings" EntityType="VocatusModel.CocktailRating" />
+          <AssociationSet Name="FK_CocktailRating_AspNetUsers" Association="VocatusModel.FK_CocktailRating_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="CocktailRating" EntitySet="CocktailRatings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CocktailRating_Cocktail" Association="VocatusModel.FK_CocktailRating_Cocktail">
+            <End Role="Cocktail" EntitySet="Cocktails" />
+            <End Role="CocktailRating" EntitySet="CocktailRatings" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Cocktail">
           <Key>
@@ -149,6 +200,7 @@ warning 6002: The table/view 'DB_84924_vocatus.Vocatus.IngredientsOnHand' does n
           <Property Name="cocktail_name" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="cocktail_image_path" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Combinations" Relationship="VocatusModel.FK__Combinati__cockt__36B12243" FromRole="Cocktail" ToRole="Combination" />
+          <NavigationProperty Name="CocktailRatings" Relationship="VocatusModel.FK_CocktailRating_Cocktail" FromRole="Cocktail" ToRole="CocktailRating" />
         </EntityType>
         <EntityType Name="Combination">
           <Key>
@@ -193,6 +245,7 @@ warning 6002: The table/view 'DB_84924_vocatus.Vocatus.IngredientsOnHand' does n
           <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Discriminator" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CocktailRatings" Relationship="VocatusModel.FK_CocktailRating_AspNetUsers" FromRole="AspNetUser" ToRole="CocktailRating" />
         </EntityType>
         <EntityType Name="Ingredient">
           <Key>
@@ -212,6 +265,41 @@ warning 6002: The table/view 'DB_84924_vocatus.Vocatus.IngredientsOnHand' does n
             </Principal>
             <Dependent Role="Combination">
               <PropertyRef Name="ingredients_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CocktailRating">
+          <Key>
+            <PropertyRef Name="rating_id" />
+          </Key>
+          <Property Name="rating_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="rating" Type="Int32" Nullable="false" />
+          <Property Name="cocktail_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="VocatusModel.FK_CocktailRating_AspNetUsers" FromRole="CocktailRating" ToRole="AspNetUser" />
+          <NavigationProperty Name="Cocktail" Relationship="VocatusModel.FK_CocktailRating_Cocktail" FromRole="CocktailRating" ToRole="Cocktail" />
+        </EntityType>
+        <Association Name="FK_CocktailRating_AspNetUsers">
+          <End Type="VocatusModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="VocatusModel.CocktailRating" Role="CocktailRating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CocktailRating">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CocktailRating_Cocktail">
+          <End Type="VocatusModel.Cocktail" Role="Cocktail" Multiplicity="1" />
+          <End Type="VocatusModel.CocktailRating" Role="CocktailRating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cocktail">
+              <PropertyRef Name="cocktail_id" />
+            </Principal>
+            <Dependent Role="CocktailRating">
+              <PropertyRef Name="cocktail_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -282,6 +370,16 @@ warning 6002: The table/view 'DB_84924_vocatus.Vocatus.IngredientsOnHand' does n
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="InsertIngredient" FunctionName="DB_84924_vocatusModel.Store.InsertIngredient" />
           <FunctionImportMapping FunctionImportName="RemoveIngredient" FunctionName="DB_84924_vocatusModel.Store.RemoveIngredient" />
+          <EntitySetMapping Name="CocktailRatings">
+            <EntityTypeMapping TypeName="VocatusModel.CocktailRating">
+              <MappingFragment StoreEntitySet="CocktailRating">
+                <ScalarProperty Name="cocktail_id" ColumnName="cocktail_id" />
+                <ScalarProperty Name="rating" ColumnName="rating" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="rating_id" ColumnName="rating_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

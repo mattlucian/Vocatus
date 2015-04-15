@@ -12,19 +12,14 @@ namespace Vocatus.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class AspNetUser
+    public partial class CocktailRating
     {
-        public AspNetUser()
-        {
-            this.CocktailRatings = new HashSet<CocktailRating>();
-        }
+        public int rating_id { get; set; }
+        public string user_id { get; set; }
+        public int rating { get; set; }
+        public int cocktail_id { get; set; }
     
-        public string Id { get; set; }
-        public string UserName { get; set; }
-        public string PasswordHash { get; set; }
-        public string SecurityStamp { get; set; }
-        public string Discriminator { get; set; }
-    
-        public virtual ICollection<CocktailRating> CocktailRatings { get; set; }
+        public virtual AspNetUser AspNetUser { get; set; }
+        public virtual Cocktail Cocktail { get; set; }
     }
 }

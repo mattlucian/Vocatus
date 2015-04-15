@@ -32,6 +32,7 @@ namespace Vocatus.Models
         public virtual DbSet<IngredientsOnHand> IngredientsOnHands { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<Ingredient> Ingredients { get; set; }
+        public virtual DbSet<CocktailRating> CocktailRatings { get; set; }
     
         public virtual int InsertIngredient(Nullable<int> iNG_ID, string uSER_NAME)
         {

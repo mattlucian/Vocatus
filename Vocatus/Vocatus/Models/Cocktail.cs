@@ -17,6 +17,7 @@ namespace Vocatus.Models
         public Cocktail()
         {
             this.Combinations = new HashSet<Combination>();
+            this.CocktailRatings = new HashSet<CocktailRating>();
         }
     
         public int cocktail_id { get; set; }
@@ -24,5 +25,6 @@ namespace Vocatus.Models
         public string cocktail_image_path { get; set; }
     
         public virtual ICollection<Combination> Combinations { get; set; }
+        public virtual ICollection<CocktailRating> CocktailRatings { get; set; }
     }
 }
