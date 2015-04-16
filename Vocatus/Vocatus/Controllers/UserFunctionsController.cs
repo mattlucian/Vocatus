@@ -51,7 +51,7 @@ namespace Vocatus.Controllers
             }
             else
             {
-                return "disregarded, as there was an error";
+                return "no";
             }            
         }
 

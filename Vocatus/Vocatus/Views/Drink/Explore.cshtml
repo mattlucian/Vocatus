@@ -47,7 +47,12 @@
                 contentType: 'application/html; charset=utf-8'
 
             }).success(function (result) {
-                alert("Your rating has been "+result+".");
+                if (result == "no") {
+                    alert("Please log in to rate cocktails!")
+                } else {
+                    alert("Your rating has been " + result + ".");
+                }
+               
 
             }).error(function (xhr, status) {
                 alert("Error rating");
@@ -61,13 +66,13 @@
     });
 </script>
 <body>
-    <div style="width:100%;height:100%">
+    <div style="width:100%;height:100%;float:left">
 
         <div class="explore_left_section">
             <div style="width:170px;margin-left:auto;margin-right:auto">
                 <h2 id="focused-drink-title"></h2>
 
-                <img id="focused-ingredient-image" src="../Content/default_image.jpg" style="width:144px;height:150px" />
+                <img id="focused-ingredient-image" src="../Content/default_image.png" style="width:144px;height:150px" />
 
                 <ul id="displayed-ingredient-list" style="height:auto"></ul>
             </div>
@@ -84,7 +89,7 @@
                 @foreach (var c in Model)
                 {
                     <div class="explore-drinks">
-                        <img id="ingredient_image_@c.cocktailId" src="@c.cocktailImagePath" style="width:144px;height:150px" />
+                        <img class="explore_image" id="ingredient_image_@c.cocktailId" src="@c.cocktailImagePath" style="width:144px;height:150px" />
                         <h4 id="ingredient_name_@c.cocktailId" style="text-decoration:underline">@(c.cocktailName != null ? c.cocktailName : "")</h4>
 
                         @{
@@ -95,7 +100,7 @@
                     var check5 = (c.rating == 5) ? "checked=\"checked\"" : "";
                         }
 
-                        <fieldset class="rating">
+                        <fieldset class="rating" style="margin-left:auto;margin-right:auto">
                             <input class="radio_rating" type="radio" @check5 id="rating5_@c.cocktailId" name="rating_@c.cocktailId" value="5" /><label for="rating5_@c.cocktailId" title="Excellent">5 stars</label>
                             <input class="radio_rating" type="radio" @check4 id="rating4_@c.cocktailId" name="rating_@c.cocktailId" value="4" /><label for="rating4_@c.cocktailId" title="Good">4 stars</label>
                             <input class="radio_rating" type="radio" @check3 id="rating3_@c.cocktailId" name="rating_@c.cocktailId" value="3" /><label for="rating3_@c.cocktailId" title="Mediocre">3 stars</label>

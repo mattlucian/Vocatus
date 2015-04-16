@@ -59,14 +59,26 @@ div.explore-drinks{
     height:255px;
     text-align:center;
 }
+div.explore-drinks-with-ingredients {
+    border:solid;
+    width:150px;
+    float:left;
+    border-width:4px;
+    margin:1px;
+    text-align:center;
+}
 
 .explore-drinks-ingredients{
     display:none;
 }
 
+div.explore-drinks-with-ingredients:hover{
+    border-color:#f70;
+}
+
 div.explore-drinks:hover{
     /*height:auto;*/
-    border-color:darkred;
+    border-color:#f70;
 }
 div.explore-drinks:hover .explore-drinks-ingredients{
     /*display:block;*/
@@ -141,11 +153,15 @@ div.explore-drinks:hover .explore-drinks-ingredients{
     height:100%;
     float:left;
     border:solid;
+    border-color:#f70;
 }
 .explore_right_section{
     width:70%;
     height:100%;
     float:left;
+}
+.image_container{
+    width:144px;
 }
 
 @media (max-width:1080px){
@@ -157,5 +173,35 @@ div.explore-drinks:hover .explore-drinks-ingredients{
         margin-left:0 !important;
         margin-right:0 !important;   
     }
+    .explore-drinks{
+        width:99% !important;
+        height:auto !important;
+        float:left !important;
+    }
+    .explore-drinks-with-ingredients{
+        width:99% !important;
+        height:auto !important;
+        float:left !important;
+    }
+    .explore_image{
+        width:75px !important;
+        height:75px !important;
+        float:left !important;
+    }
+    .explore_image_with_ingredients{
+        width:90px !important;
+        height:95px !important;
+        float:left !important;
+    }
+    .image_container{
+        width:75px !important;
+        height:100% !important;
+    }
+    .other_container{
+        text-align:center !important;
+        width:60% !important;
+        float:left;
+    }
+
 }
 

@@ -51,7 +51,7 @@ ul.tabs li.selected a, ul.tabs li.selected a:hover
     position: relative;
     top: 0px;
     font-weight:bold;
-    background: #037d72;
+    background: #f70;
     color:White;
 }
         
@@ -69,6 +69,7 @@ div.tabcontents
     border-top: 2px solid white;
     padding: 30px;
     background-color:#222;
+    border-color:#f70;
 }
 
 .darkbutton 

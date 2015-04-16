@@ -41,9 +41,9 @@
 </script>
 
 <ul class="tabs" data-persist="true" style="min-width:280px">
-    <li><a href="#view1">My Ingredients</a></li>
+    <li><a href="#view1">Ingredients</a></li>
     <li><a href="#view2">Cocktails</a></li>
-    <li><a href="#view3">Rated Drinks</a></li>
+    <li><a href="#view3">Rated</a></li>
 </ul>
 <div class="tabcontents" style="min-width:280px">
     <div id="view1">
@@ -107,47 +107,55 @@
 
         <div style="min-width:240px;margin:auto;height:100%">
             <div style="width:100%;float:left">
-                <h3>You have all the ingredients for...</h3>
+                <h3>Complete Ingredients</h3>
                 @foreach (var c in Model.allCocktailCombinations)
                 {
-                    <div style="border:solid;width:150px;float:left;">
-                        <img src="@c.cocktailImagePath" style="width:144px;height:150px" />
-                        <h4 style="text-decoration:underline">@(c.cocktailName != null ? c.cocktailName : "")</h4>
+                    <div class="explore-drinks-with-ingredients" style="border:solid;width:150px;float:left;">
+                        <div class="image_container">
+                            <img class="explore_image_with_ingredients" src="@c.cocktailImagePath" style="width:144px;height:150px" />
+                        </div>
+                        <div class="other_container">
+                            <h4 style="text-decoration:underline">@(c.cocktailName != null ? c.cocktailName : "")</h4>
 
-                        @foreach (var i in c.ingredients)
-                        {
-                            <p> @i </p>
-                        }
+                            @foreach (var i in c.ingredients)
+                            {
+                                <p> @i </p>
+                            }
+                        </div>
 
                     </div>
                 }
             </div>
-            <div style="width:100%;float:left"><hr /></div>
+            <hr style="width:100%;float:left" />
 
             <div style="width:100%;float:left">
 
-                <h3>You have Partial Ingredients For...</h3>
+                <h3>Partial Ingredients</h3>
                 @foreach (var c in Model.allPartialCocktailCombinations)
                 {
-                    <div style="border:solid;width:150px;float:left;">
-                        <img src="@c.cocktailImagePath" style="width:144px;height:150px" />
-                        <h4 style="text-decoration:underline">@(c.cocktailName != null ? c.cocktailName : "")</h4>
+                    <div class="explore-drinks-with-ingredients"  style="border:solid;width:150px;float:left;">
+                        <div class="image_container">
+                            <img class="explore_image_with_ingredients" src="@c.cocktailImagePath" style="width:144px;height:150px" />
+                        </div>
 
-                        @{int ct = 0;}
-                        @foreach (var i in c.ingredients)
-                        {
-                            if (c.partialIngredients.ElementAt(ct))
+                        <div class="other_container">
+                            <h4 style="text-decoration:underline">@(c.cocktailName != null ? c.cocktailName : "")</h4>
+
+                            @{int ct = 0;}
+                            @foreach (var i in c.ingredients)
                             {
-                                <p> @i </p>
-                            }
-                            else
-                            {
-                                <p style="color:red"> @i </p>
-                            }
+                                if (c.partialIngredients.ElementAt(ct))
+                                {
+                                    <p> @i </p>
+                                }
+                                else
+                                {
+                                    <p style="color:red"> @i </p>
+                                }
 
-                            ct++;
-                        }
-
+                                ct++;
+                            }
+                        </div>
                     </div>
                 }
             </div>
@@ -156,8 +164,8 @@
     <div id="view3">
         @foreach (var item in Model.ratedCocktails)
         {
-            <div style="border:solid;width:150px;float:left;">
-                <img src="@item.cocktailImagePath" style="width:144px;height:150px" />
+            <div style="border:solid;width:150px;float:left;" class="explore-drinks">
+                <img class="explore_image" src="@item.cocktailImagePath" style="width:144px;height:150px" />
                 <h4 style="text-decoration:underline">@(item.cocktailName != null ? item.cocktailName : "")</h4>
 
                 @{
